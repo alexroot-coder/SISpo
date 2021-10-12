@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Media;
@@ -145,11 +145,20 @@ namespace printff
             for (int i = 1; i < aaa.Length; i++)
             {
 
-                if (Char.IsNumber(aaa[i][0]) && Char.IsNumber(aaa[i][1])  && Char.IsNumber(aaa[i][2]) )
+                try
                 {
-                    var t = OctalToASCII((aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()));
-                    cnsl = cnsl.Replace("\\"+(aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()), t);
+                    if (Char.IsNumber(aaa[i][0]) && Char.IsNumber(aaa[i][1])  && Char.IsNumber(aaa[i][2]) )
+                    {
+                        var t = OctalToASCII((aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()));
+                        cnsl = cnsl.Replace("\\"+(aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()), t);
+                    }
                 }
+                catch (IndexOutOfRangeException)
+                {
+                    //Console.WriteLine(console.Replace("\\\\","\\"));
+                    
+                }
+                
             }
             return cnsl;
         }
