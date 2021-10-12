@@ -16,7 +16,7 @@ namespace printff
             {
                 ascii += (char)OctalToDecimal(oct.Substring(i, 3));
             }
-            return ascii; 
+            return ascii;
         }
         private static int OctalToDecimal(string octal)
         {
@@ -28,7 +28,7 @@ namespace printff
             }
             return (int)dec;
         }
-        
+
         public static List<string> indexes(string a, char b)
         {
             List<string> listrange = new List<string>();
@@ -38,14 +38,14 @@ namespace printff
                 if (c == b)
                 {
                     var sym = '%';
-                    listrange.Add(sym.ToString() + a[cnt+1]);
+                    listrange.Add(sym.ToString() + a[cnt + 1]);
                 }
 
                 cnt++;
             }
             return listrange;
         }
-        
+
         public static string ConvertHex(String hexString)
         {
             try
@@ -56,8 +56,8 @@ namespace printff
                 {
                     String hs = string.Empty;
 
-                    hs   = hexString.Substring(i,2);
-                    uint decval =   System.Convert.ToUInt32(hs, 16);
+                    hs = hexString.Substring(i, 2);
+                    uint decval = System.Convert.ToUInt32(hs, 16);
                     char character = System.Convert.ToChar(decval);
                     ascii += character;
 
@@ -98,33 +98,33 @@ namespace printff
             }
             return sb.ToString();
         }
-        
+
         public static string preob_5(string console)
         {
             string cnsl = console;
             var aaa = console.Split(new string[] { "\\U" }, StringSplitOptions.None);
             for (int i = 1; i < aaa.Length; i++)
             {
-                var t = ConvertUnic((aaa[i][0].ToString() + aaa[i][1].ToString() +aaa[i][2].ToString() + aaa[i][3].ToString() +aaa[i][4].ToString() + aaa[i][5].ToString()+aaa[i][6].ToString() + aaa[i][7].ToString()));
-                cnsl = cnsl.Replace("\\U"+(aaa[i][0].ToString() + aaa[i][1].ToString() +aaa[i][2].ToString() + aaa[i][3].ToString() +aaa[i][4].ToString() + aaa[i][5].ToString()+aaa[i][6].ToString() + aaa[i][7].ToString()), t);
-                
+                var t = ConvertUnic((aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString() + aaa[i][3].ToString() + aaa[i][4].ToString() + aaa[i][5].ToString() + aaa[i][6].ToString() + aaa[i][7].ToString()));
+                cnsl = cnsl.Replace("\\U" + (aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString() + aaa[i][3].ToString() + aaa[i][4].ToString() + aaa[i][5].ToString() + aaa[i][6].ToString() + aaa[i][7].ToString()), t);
+
             }
             return cnsl;
         }
-        
+
         public static string preob_4(string console)
         {
             string cnsl = console;
             var aaa = console.Split(new string[] { "\\u" }, StringSplitOptions.None);
             for (int i = 1; i < aaa.Length; i++)
             {
-                var t = ConvertUnic((aaa[i][0].ToString() + aaa[i][1].ToString() +aaa[i][2].ToString() + aaa[i][3].ToString()));
-                cnsl = cnsl.Replace("\\u"+(aaa[i][0].ToString() + aaa[i][1].ToString() +aaa[i][2].ToString() + aaa[i][3].ToString()), t);
-                
+                var t = ConvertUnic((aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString() + aaa[i][3].ToString()));
+                cnsl = cnsl.Replace("\\u" + (aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString() + aaa[i][3].ToString()), t);
+
             }
             return cnsl;
         }
-        
+
         public static string preob_3(string console)
         {
             string cnsl = console;
@@ -132,12 +132,12 @@ namespace printff
             for (int i = 1; i < aaa.Length; i++)
             {
                 var t = ConvertHex((aaa[i][0].ToString() + aaa[i][1].ToString()));
-                cnsl = cnsl.Replace("\\x"+(aaa[i][0].ToString() + aaa[i][1].ToString()), t);
-                
+                cnsl = cnsl.Replace("\\x" + (aaa[i][0].ToString() + aaa[i][1].ToString()), t);
+
             }
             return cnsl;
         }
-        
+
         public static string preob_2(string console)
         {
             string cnsl = console;
@@ -147,27 +147,27 @@ namespace printff
 
                 try
                 {
-                    if (Char.IsNumber(aaa[i][0]) && Char.IsNumber(aaa[i][1])  && Char.IsNumber(aaa[i][2]) )
+                    if (Char.IsNumber(aaa[i][0]) && Char.IsNumber(aaa[i][1]) && Char.IsNumber(aaa[i][2]))
                     {
                         var t = OctalToASCII((aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()));
-                        cnsl = cnsl.Replace("\\"+(aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()), t);
+                        cnsl = cnsl.Replace("\\" + (aaa[i][0].ToString() + aaa[i][1].ToString() + aaa[i][2].ToString()), t);
                     }
                 }
                 catch (IndexOutOfRangeException)
                 {
                     //Console.WriteLine(console.Replace("\\\\","\\"));
-                    
+
                 }
-                
+
             }
             return cnsl;
         }
-        
+
         public static string preob(string console)
         {
             string cnsl = console;
             int index_of;
-            string[] tmp = new[] {"\\b","\\r","\\t","%y","\\v","%z","\\\"","%%"};
+            string[] tmp = new[] { "\\b", "\\r", "\\t", "%y", "\\v", "%z", "\\\"", "%%" ,"\\n"};
 
             for (int i = 0; i < tmp.Length; i++)
             {
@@ -214,20 +214,33 @@ namespace printff
                     {
                         cnsl = cnsl.Replace("%%", "%");
                     }
+                    if ((tmp[i] == "\\n"))
+                    {
+                        cnsl = cnsl.Replace("\\n", "\n");
+                    }
                 }
             }
             return cnsl;
         }
-        
+
         public static int Main(string[] args)
         {
             if (args.Length == 0)
             {
                 return 0;
             }
-            
+
+            if (args[0] == "--help")
+            {
+
+                Console.Write("ОПИСАНИЕ \nВывод ЗНАЧЕНИЙ согласно указанному ФОРМАТУ.\n--help\tпоказать справку и выйти\n--version\n\tпоказать информацию о версии и выйти\nДирективы ФОРМАТА такие же как в функции printf на C.Интерпретируемые символы:\n\\tдвойные кавычки\n\\NNN\n\tсимвол с восьмеричным кодом NNN(от 1 до 3 цифр)\n\\\\\n\tобратная косая черта\n\\a\n\tсигнал(BEL)\n\\b\n\tзабой\n\\c\n\tне производить дальнейшую обработку данных \n\\f\n\tперевод страницы\n\\n\n\t\nновая строка \\r\n\tвозврат каретки \\t\n\tгоризонтальная табуляция \\v\n\tвертикальная табуляция\n\\xHH\n\tсимвол с шестнадцатеричным кодом HH(1 или 2 цифры)\\uHHHH\n\tсимвол Unicode(ISO / IEC 10646) с шестнадцатеричным кодом HHHH(4 цифры)\\UHHHHHHHH\n\tсимвол Unicode с шестнадцатеричным кодом HHHHHHHH(8 цифр)%%\n\tсимвол %% b\n\tЗНАЧЕНИЕ интерпретируется как строка с символами пропуска,\n\tза исключением того случая, когда восьмерично представленный символ пропуска имеет форму \0 или \0NNN ");
+                return 0;
+            }
+
+
+
             var consoleout = args[0];
-            
+
             if (args[0].Contains("%%"))
             {
                 consoleout = consoleout.Replace("%%", "%z");
@@ -239,7 +252,7 @@ namespace printff
                 consoleout = consoleout.Replace("\\a", "");
                 args[0] = args[0].Replace("\\a", "");
             }
-            
+
             var a = indexes(consoleout, '%');
             var index_of = args[0].IndexOf("%");
 
@@ -250,35 +263,35 @@ namespace printff
                     a.RemoveAt(i);
                 }
             }
-            
-            
+
+
             if (a.Count == args.Length - 1)
             {
                 for (int i = 0; i < a.Count; i++)
-                { 
-                   if (a[i] == "%s")
+                {
+                    if (a[i] == "%s")
                     {
                         index_of = consoleout.IndexOf(a[i]);
-                        consoleout = consoleout.Insert(index_of, args[i+1]);
+                        consoleout = consoleout.Insert(index_of, args[i + 1]);
                         index_of = consoleout.IndexOf(a[i]);
                         consoleout = consoleout.Remove(index_of, 2);
                     }
 
                     if (a[i] == "%d")
                     {
-                        if (args[i+1].Contains("-0x"))
+                        if (args[i + 1].Contains("-0x"))
                         {
-                            if (args[i+1].Replace("-0x","0x").Contains("0x"))
+                            if (args[i + 1].Replace("-0x", "0x").Contains("0x"))
                             {
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Insert(index_of,
-                                    "-" + Convert.ToInt32(args[i+1].Replace("-0x","0x"), 16).ToString());
+                                    "-" + Convert.ToInt32(args[i + 1].Replace("-0x", "0x"), 16).ToString());
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
                             else
                             {
-                                var aa = Convert.ToInt32(args[i+1]);
+                                var aa = Convert.ToInt32(args[i + 1]);
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Insert(index_of,
                                     aa.ToString());
@@ -288,17 +301,17 @@ namespace printff
                         }
                         else
                         {
-                            if (args[i+1].Contains("0x"))
+                            if (args[i + 1].Contains("0x"))
                             {
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Insert(index_of,
-                                    Convert.ToInt32(args[i+1], 16).ToString());
+                                    Convert.ToInt32(args[i + 1], 16).ToString());
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
                             else
                             {
-                                var aa = Convert.ToInt32(args[i+1]);
+                                var aa = Convert.ToInt32(args[i + 1]);
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Insert(index_of,
                                     aa.ToString());
@@ -310,11 +323,11 @@ namespace printff
 
                     if (a[i] == "%x")
                     {
-                        if (args[i+1].Contains("0x"))
+                        if (args[i + 1].Contains("0x"))
                         {
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Insert(index_of,
-                                (args[i+1].Replace("0x","")).ToUpper());
+                                (args[i + 1].Replace("0x", "")).ToUpper());
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Remove(index_of, 2);
                         }
@@ -322,7 +335,7 @@ namespace printff
                         {
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Insert(index_of,
-                                (Int64.Parse(args[i+1])).ToString("X").ToString().ToLower());
+                                (Int64.Parse(args[i + 1])).ToString("X").ToString().ToLower());
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Remove(index_of, 2);
                         }
@@ -330,11 +343,11 @@ namespace printff
 
                     if (a[i] == "%X")
                     {
-                        if (args[i+1].Contains("0x"))
+                        if (args[i + 1].Contains("0x"))
                         {
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Insert(index_of,
-                                (args[i+1].Replace("0x","")).ToUpper());
+                                (args[i + 1].Replace("0x", "")).ToUpper());
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Remove(index_of, 2);
                         }
@@ -342,7 +355,7 @@ namespace printff
                         {
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Insert(index_of,
-                                (Int64.Parse(args[i+1])).ToString("X").ToString().ToUpper());
+                                (Int64.Parse(args[i + 1])).ToString("X").ToString().ToUpper());
                             index_of = consoleout.IndexOf(a[i]);
                             consoleout = consoleout.Remove(index_of, 2);
                         }
@@ -350,19 +363,19 @@ namespace printff
 
                     if (a[i] == "%o")
                     {
-                        var bin = Convert.ToInt32(args[i+1], 10);
+                        var bin = Convert.ToInt32(args[i + 1], 10);
                         index_of = consoleout.IndexOf(a[i]);
-                        consoleout = consoleout.Insert(index_of,Convert.ToString(bin,2) );
+                        consoleout = consoleout.Insert(index_of, Convert.ToString(bin, 2));
                         index_of = consoleout.IndexOf(a[i]);
                         consoleout = consoleout.Remove(index_of, 2);
                     }
 
                     if (a[i] == "%f")
                     {
-                        var dec = Convert.ToInt32(args[i+1], 10);
+                        var dec = Convert.ToInt32(args[i + 1], 10);
                         var flt = Convert.ToSingle(dec);
                         index_of = consoleout.IndexOf(a[i]);
-                        consoleout = consoleout.Insert(index_of, string.Format("{0:F6}",dec));
+                        consoleout = consoleout.Insert(index_of, string.Format("{0:F6}", dec));
                         index_of = consoleout.IndexOf(a[i]);
                         consoleout = consoleout.Remove(index_of, 2);
                     }
@@ -379,26 +392,26 @@ namespace printff
                             if (a[i] == "%s")
                             {
                                 index_of = consoleout.IndexOf(a[i]);
-                                consoleout = consoleout.Insert(index_of, args[i+1]);
+                                consoleout = consoleout.Insert(index_of, args[i + 1]);
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
 
                             if (a[i] == "%d")
                             {
-                                if (args[i+1].Contains("-0x"))
+                                if (args[i + 1].Contains("-0x"))
                                 {
-                                    if (args[i+1].Replace("-0x","0x").Contains("0x"))
+                                    if (args[i + 1].Replace("-0x", "0x").Contains("0x"))
                                     {
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Insert(index_of,
-                                            "-" + Convert.ToInt32(args[i+1].Replace("-0x","0x"), 16).ToString());
+                                            "-" + Convert.ToInt32(args[i + 1].Replace("-0x", "0x"), 16).ToString());
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Remove(index_of, 2);
                                     }
                                     else
                                     {
-                                        var aa = Convert.ToInt32(args[i+1]);
+                                        var aa = Convert.ToInt32(args[i + 1]);
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Insert(index_of,
                                             aa.ToString());
@@ -408,17 +421,17 @@ namespace printff
                                 }
                                 else
                                 {
-                                    if (args[i+1].Contains("0x"))
+                                    if (args[i + 1].Contains("0x"))
                                     {
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Insert(index_of,
-                                            Convert.ToInt32(args[i+1], 16).ToString());
+                                            Convert.ToInt32(args[i + 1], 16).ToString());
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Remove(index_of, 2);
                                     }
                                     else
                                     {
-                                        var aa = Convert.ToInt32(args[i+1]);
+                                        var aa = Convert.ToInt32(args[i + 1]);
                                         index_of = consoleout.IndexOf(a[i]);
                                         consoleout = consoleout.Insert(index_of,
                                             aa.ToString());
@@ -430,12 +443,12 @@ namespace printff
 
                             if (a[i] == "%x")
                             {
-                                if (args[i+1].Contains("0x"))
+                                if (args[i + 1].Contains("0x"))
                                 {
-                                    
+
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Insert(index_of,
-                                        (args[i+1].Replace("0x","")).ToLower());
+                                        (args[i + 1].Replace("0x", "")).ToLower());
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Remove(index_of, 2);
                                 }
@@ -443,7 +456,7 @@ namespace printff
                                 {
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Insert(index_of,
-                                        (Int64.Parse(args[i+1])).ToString("X").ToString().ToLower());
+                                        (Int64.Parse(args[i + 1])).ToString("X").ToString().ToLower());
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Remove(index_of, 2);
                                 }
@@ -451,12 +464,12 @@ namespace printff
 
                             if (a[i] == "%X")
                             {
-                                if (args[i+1].Contains("0x"))
+                                if (args[i + 1].Contains("0x"))
                                 {
-                                    
+
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Insert(index_of,
-                                        (args[i+1].Replace("0x","")).ToUpper());
+                                        (args[i + 1].Replace("0x", "")).ToUpper());
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Remove(index_of, 2);
                                 }
@@ -464,7 +477,7 @@ namespace printff
                                 {
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Insert(index_of,
-                                        (Int64.Parse(args[i+1])).ToString("X").ToString().ToUpper());
+                                        (Int64.Parse(args[i + 1])).ToString("X").ToString().ToUpper());
                                     index_of = consoleout.IndexOf(a[i]);
                                     consoleout = consoleout.Remove(index_of, 2);
                                 }
@@ -472,19 +485,19 @@ namespace printff
 
                             if (a[i] == "%o")
                             {
-                                var bin = Convert.ToInt32(args[i+1], 10);
+                                var bin = Convert.ToInt32(args[i + 1], 10);
                                 index_of = consoleout.IndexOf(a[i]);
-                                consoleout = consoleout.Insert(index_of,Convert.ToString(bin,2) );
+                                consoleout = consoleout.Insert(index_of, Convert.ToString(bin, 2));
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
 
                             if (a[i] == "%f")
                             {
-                                var dec = Convert.ToInt32(args[i+1], 10);
+                                var dec = Convert.ToInt32(args[i + 1], 10);
                                 var flt = Convert.ToSingle(dec);
                                 index_of = consoleout.IndexOf(a[i]);
-                                consoleout = consoleout.Insert(index_of, string.Format("{0:F6}",dec));
+                                consoleout = consoleout.Insert(index_of, string.Format("{0:F6}", dec));
                                 index_of = consoleout.IndexOf(a[i]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
@@ -494,8 +507,8 @@ namespace printff
                             break;
                         }
                     }
-                    
-                    for(int k = 0; k < a.Count; k++)
+
+                    for (int k = 0; k < a.Count; k++)
                     {
                         if (consoleout.Contains(a[k]))
                         {
@@ -518,7 +531,7 @@ namespace printff
                             Console.WriteLine(preob(consoleout));
                             consoleout = args[0];
                         }
-                        
+
                         if (a[tmp] == "%s")
                         {
                             index_of = consoleout.IndexOf(a[tmp]);
@@ -531,11 +544,11 @@ namespace printff
                         {
                             if (args[j].Contains("-0x"))
                             {
-                                if (args[j].Replace("-0x","0x").Contains("0x"))
+                                if (args[j].Replace("-0x", "0x").Contains("0x"))
                                 {
                                     index_of = consoleout.IndexOf(a[tmp]);
                                     consoleout = consoleout.Insert(index_of,
-                                        "-" + Convert.ToInt32(args[j].Replace("-0x","0x"), 16).ToString());
+                                        "-" + Convert.ToInt32(args[j].Replace("-0x", "0x"), 16).ToString());
                                     index_of = consoleout.IndexOf(a[tmp]);
                                     consoleout = consoleout.Remove(index_of, 2);
                                 }
@@ -574,10 +587,10 @@ namespace printff
                         {
                             if (args[j].Contains("0x"))
                             {
-                                
+
                                 index_of = consoleout.IndexOf(a[tmp]);
                                 consoleout = consoleout.Insert(index_of,
-                                    (args[j].Replace("0x","")).ToUpper());
+                                    (args[j].Replace("0x", "")).ToUpper());
                                 index_of = consoleout.IndexOf(a[tmp]);
                                 consoleout = consoleout.Remove(index_of, 2);
                             }
@@ -593,47 +606,47 @@ namespace printff
 
                         if (a[tmp] == "%X")
                         {
-                                if (args[j].Contains("0x"))
-                                {
-                                    
-                                    index_of = consoleout.IndexOf(a[tmp]);
-                                    consoleout = consoleout.Insert(index_of,
-                                        (args[j].Replace("0x","")).ToUpper());
-                                    index_of = consoleout.IndexOf(a[tmp]);
-                                    consoleout = consoleout.Remove(index_of, 2);
-                                }
-                                else
-                                {
-                                    index_of = consoleout.IndexOf(a[tmp]);
-                                    consoleout = consoleout.Insert(index_of,
-                                        (Int64.Parse(args[j])).ToString("X").ToString().ToUpper());
-                                    index_of = consoleout.IndexOf(a[tmp]);
-                                    consoleout = consoleout.Remove(index_of, 2);
-                                }
+                            if (args[j].Contains("0x"))
+                            {
+
+                                index_of = consoleout.IndexOf(a[tmp]);
+                                consoleout = consoleout.Insert(index_of,
+                                    (args[j].Replace("0x", "")).ToUpper());
+                                index_of = consoleout.IndexOf(a[tmp]);
+                                consoleout = consoleout.Remove(index_of, 2);
+                            }
+                            else
+                            {
+                                index_of = consoleout.IndexOf(a[tmp]);
+                                consoleout = consoleout.Insert(index_of,
+                                    (Int64.Parse(args[j])).ToString("X").ToString().ToUpper());
+                                index_of = consoleout.IndexOf(a[tmp]);
+                                consoleout = consoleout.Remove(index_of, 2);
+                            }
                         }
 
                         if (a[tmp] == "%o")
                         {
-                                var bin = Convert.ToInt32(args[j], 10);
-                                index_of = consoleout.IndexOf(a[tmp]);
-                                consoleout = consoleout.Insert(index_of,Convert.ToString(bin,2) );
-                                index_of = consoleout.IndexOf(a[tmp]);
-                                consoleout = consoleout.Remove(index_of, 2);
+                            var bin = Convert.ToInt32(args[j], 10);
+                            index_of = consoleout.IndexOf(a[tmp]);
+                            consoleout = consoleout.Insert(index_of, Convert.ToString(bin, 2));
+                            index_of = consoleout.IndexOf(a[tmp]);
+                            consoleout = consoleout.Remove(index_of, 2);
                         }
 
                         if (a[tmp] == "%f")
                         {
-                                var dec = Convert.ToInt32(args[j], 10);
-                                var flt = Convert.ToSingle(dec);
-                                index_of = consoleout.IndexOf(a[tmp]);
-                                consoleout = consoleout.Insert(index_of, string.Format("{0:F6}",dec));
-                                index_of = consoleout.IndexOf(a[tmp]);
-                                consoleout = consoleout.Remove(index_of, 2);
+                            var dec = Convert.ToInt32(args[j], 10);
+                            var flt = Convert.ToSingle(dec);
+                            index_of = consoleout.IndexOf(a[tmp]);
+                            consoleout = consoleout.Insert(index_of, string.Format("{0:F6}", dec));
+                            index_of = consoleout.IndexOf(a[tmp]);
+                            consoleout = consoleout.Remove(index_of, 2);
                         }
                         tmp++;
                         j++;
                     }
-                    for(int k = 0; k < a.Count; k++)
+                    for (int k = 0; k < a.Count; k++)
                     {
                         if (consoleout.Contains(a[k]))
                         {
@@ -645,7 +658,7 @@ namespace printff
                     }
                 }
             }
-            Console.WriteLine(preob_5(preob_4(preob_3(preob_2(preob(consoleout.Replace("\\\\","\\")))))));
+            Console.WriteLine(preob_5(preob_4(preob_3(preob_2(preob(consoleout.Replace("\\\\", "\\")))))));
             return 0;
         }
     }
