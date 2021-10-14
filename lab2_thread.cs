@@ -1,41 +1,62 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Timers;
+using System.Threading.Tasks;
 
-namespace lab2
+namespace ConsoleApplication1
 {
-    public class Program
+
+    internal class Program
     {
         public static int n = 0;
-        public static void print_n()
+        
+        public static void Main(string[] args)
         {
-            Console.WriteLine(n);
-            Thread.Sleep(1000);
+            var second = new Thread(secondThrd);
+            second.Start();
+
         }
-
-
-        public static void scan()
+        static void firstThrd()
         {
-            Thread firstThread = new Thread(new ThreadStart(print_n));
-            firstThread.Start();
-            if (Console.ReadKey().Key == ConsoleKey.DownArrow)
+            while (true)
             {
-                n++;
+               Console.WriteLine(n);
+                Thread.Sleep(1000);
+                
             }
         }
 
-        public static void Main(string[] args)
+        static void secondThrd()
         {
+            var first = new Thread(firstThrd);
+            first.Start();
 
-            Thread secondThread = new Thread(new ThreadStart(scan));
-            secondThread.Start();
+            while (true)    
+            {
+                
+                var tt = Console.ReadKey().KeyChar;
+                if (tt == 'б')
+                {
+                    first.Abort();
+                    break;
+                }
+                if (tt == 'e')
+                {
+                    first.Abort();
+                    break;
+                }
+                
+                if (Console.ReadKey().Key == ConsoleKey.OemPlus)
+                {
+                    n++;
+                }
+                if (Console.ReadKey().Key == ConsoleKey.OemMinus)
+                {
+                    n--;
+                }
+                
+            }
         }
-
-
-
+ 
     }
 }
