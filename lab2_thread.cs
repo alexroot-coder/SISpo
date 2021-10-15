@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace ConsoleApplication1
 {
 
     internal class Program
     {
         public static int n = 0;
-        
+
         public static void Main(string[] args)
         {
             var second = new Thread(secondThrd);
@@ -18,11 +19,16 @@ namespace ConsoleApplication1
         }
         static void firstThrd()
         {
+            var np = 0;
             while (true)
             {
-               Console.WriteLine(n);
-                Thread.Sleep(1000);
-                
+                if (np != n)
+                {
+                    Console.WriteLine(n);
+                    np = n;
+                }
+               // Thread.Sleep(0.1);
+
             }
         }
 
@@ -31,10 +37,11 @@ namespace ConsoleApplication1
             var first = new Thread(firstThrd);
             first.Start();
 
-            while (true)    
+            while (true)
             {
-                
-                var tt = Console.ReadKey().KeyChar;
+
+                var tt = Console.ReadKey(true).KeyChar;
+                //var tt = _getch();
                 if (tt == 'б')
                 {
                     first.Abort();
@@ -45,18 +52,18 @@ namespace ConsoleApplication1
                     first.Abort();
                     break;
                 }
-                
-                if (Console.ReadKey().Key == ConsoleKey.OemPlus)
+
+                if (Console.ReadKey(true).Key == ConsoleKey.OemPlus)
                 {
                     n++;
                 }
-                if (Console.ReadKey().Key == ConsoleKey.OemMinus)
+                if (Console.ReadKey(true).Key == ConsoleKey.OemMinus)
                 {
                     n--;
                 }
-                
+
             }
         }
- 
+
     }
 }
